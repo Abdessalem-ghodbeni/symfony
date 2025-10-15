@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}details du book{% endblock %}
+
+{% block body %}
+    <h1>details du book </h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Title :: {{ book_a_affiche.title }}</h5>
+            <p class="card-text">
+                <strong>Référence:</strong> {{ book_a_affiche.id }}<br>
+                <strong>Date de publication:</strong> {{ book_a_affiche.publicationDate|date('d/m/Y') }}<br>
+                <strong>Catégorie:</strong> {{ book_a_affiche.category }}<br>
+                <strong>Publié:</strong> {{ book_a_affiche.enabled ? 'Oui' : 'Non' }}<br>
+                <strong>Auteur:</strong> {{ book_a_affiche.author.username }}<br>
+                <strong>Email de l'auteur:</strong> {{ book_a_affiche.author.email }}
+            </p>
+        </div>
+    </div>
+
+    <a href="{{ path('app_book_liste_from_db') }}" class="btn btn-secondary mt-3">Retour vers la liste des books</a>
+{% endblock %}

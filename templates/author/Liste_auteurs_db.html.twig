@@ -1,0 +1,48 @@
+{# heritw structure html w style .. du fichier de base qui arrive par defaut
+avec la creation de projet symfony et on définit les block #} 
+{% extends 'base.html.twig' %} 
+{% block title %}Liste des auteurs{% endblock %} 
+{% block body %}
+<div class="container p-4 text-center mt-5">
+<h1>Liste des auteurs</h1>
+{% if liste_auteurs is empty %}
+<h1>Auccun auteur disponible dnas la liste</h1>
+{% else %}
+
+<table class="table" border="3">
+  <thead>
+    <tr>
+      <th>Identifiant</th>
+      <th>Nom Auteur</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for auteur in liste_auteurs %}
+    <tr>
+      <td>{{ auteur.id }}</td>
+      <td>{{ auteur.username }}</td>
+      <td>{{ auteur.email }}</td>
+      <td>
+        {# btn-warning w btn-danger ce sont des classes css de bootstrap pret #}
+        <a
+          href="{{ path('app_author_edit', { id: auteur.id }) }}"
+          class="btn btn-warning"
+          >Edit</a
+        >
+       
+        <a
+          href="{{ path('app_author_delete', { id: auteur.id }) }}"
+          class="btn btn-danger"
+          >Delete</a
+        >
+      </td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}  
+</div>
+{% endblock %}

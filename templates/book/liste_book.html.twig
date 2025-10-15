@@ -1,0 +1,73 @@
+{# templates/book/index.html.twig #} {% extends 'base.html.twig' %} {% block
+title %}Liste des Livres{% endblock %} {% block body %}
+<div class="container p-4">
+  <h1 class="mb-4">Liste des livres publiés</h1>
+
+  <div class="alert alert-info">
+    <strong>Statistiques:</strong>
+    Livres publiés: {{ nb_des_livres_pulies }} | Livres non publiés:
+    {{ nb_des_livre_non_publie }}
+  </div>
+
+  {% if liste_des_book_publie is empty and liste_des_book_publie is not defined
+  %}
+  <div class="alert alert-warning">
+    pas des livres disponibles dans la liste
+  </div>
+  {% else %}
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>identifiant livre</th>
+        <th>Titre du livre</th>
+        <th>Catégorie du livre</th>
+        <th>Auteur du livre</th>
+        <th>Date de publication</th>
+        <th>Published</th>
+
+        
+        <th>Actions</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in liste_des_book_publie %}
+      <tr>
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.category }}</td>
+        <td>{{ book.author.username }}</td>
+        <!-- si vous ne mettez pas le filter date ca va afficher une erreur comme
+        j'ai expliquer en classe -->
+        <td>{{book.publicationDate | date('Y-m-d')}}</td>
+         <td>{{book.enabled }}</td>
+        
+        <td>
+          <a
+            href="{{ path('app_book_edit', { id: book.id }) }}"
+            class="btn btn-warning btn-sm"
+            >Edit</a
+          >
+          <a
+            href="{{ path('app_book_delete', { id: book.id }) }}"
+            class="btn btn-danger btn-sm"
+            >Delete</a
+          >
+          <a
+            href="{{ path('app_book_show', { id: book.id }) }}"
+            class="btn btn-info btn-sm"
+            >Show</a
+          >
+        </td>
+       
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <a href="{{ path('app_book_new') }}" class="btn btn-primary"
+    >Ajouter un livre</a
+  >
+</div>
+{% endblock %}

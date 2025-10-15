@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Auteur{% endblock %}
+
+{% block body %}
+<div class="container p-4 text-center mt-5">
+    <h1>Modifier l'auteur</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_liste_author_from_db') }}">Retour vers  la liste</a>
+    </div >
+{% endblock %}

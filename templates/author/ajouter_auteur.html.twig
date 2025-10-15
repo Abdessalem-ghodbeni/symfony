@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %} 
+
+
+{% block body %}
+{# methode 1 pour afficher formulaire au niveau
+twig #} {#
+<h1>Ajouter un auteur</h1>
+
+{{ form_start(formulaire_ajout_auteur) }}
+{{ form_row(formulaire_ajout_auteur.username) }}
+{{ form_row(formulaire_ajout_auteur.email) }}
+<button type="submit">Ajouter</button>
+{{ form_end(formulaire_ajout_auteur) }}
+
+<a href="{{ path('app_author') }}">Retour à la liste</a> #} {#
+-----------------------------------------------------------------------------------------------------------
+#} {# deusieme methode pour afficher formulaire au niveau twig mais avec cette
+facon il faux ajouter le button qui permet de faire submit au niveaux du
+formulaire generer automatiquement donc on utlise la methode add pour ajouter un
+nouveau champs Ok#}
+
+<div class="container p-4 text-center mt-5">
+  <h1 class="text-danger">Ajouter un auteur</h1>
+  {{ form(formulaire_ajout_auteur) }}
+</div>
+{% endblock %}
