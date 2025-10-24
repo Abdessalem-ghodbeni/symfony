@@ -1,0 +1,27 @@
+<h2>Livres pour la catégorie "{{ category }}"</h2>
+
+<form method="get" action="{{ path('book_by_category') }}">
+  <input
+    type="text"
+    name="category"
+    placeholder="Ex: Romance"
+    value="{{ category }}"
+  />
+  <button type="submit">Rechercher</button>
+</form>
+
+{% if category %}
+<p>Nombre de livres trouvés : {{ nombre_book_by_category }}</p>
+
+<ul>
+  {% for book in liste_book_by_category %}
+  <li>
+    {{ book.title }} —
+    {{ book.publicationDate ? book.publicationDate|date('Y-m-d') : '—' }}
+  </li>
+  {% else %}
+  <li>Aucun livre trouvé.</li>
+  {% endfor %}
+</ul>
+{% endif %}
+ 

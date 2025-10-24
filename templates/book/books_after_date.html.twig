@@ -1,0 +1,38 @@
+ 
+
+{% extends 'base.html.twig' %}
+
+{% block title %}livre apres une date{% endblock %}
+
+{% block body %}
+    <h5>Rechercher des livres publie apres une date</h5>
+
+    <form method="get" >
+        <label for="publication_date">Date de publication (format: YYYY-MM-DD):</label><br>
+        <input type="text" id="publication_date" name="publication_date" 
+               value="{{ selected_date ? selected_date|date('Y-m-d') : '' }}"><br><br>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if selected_date %}
+        <h2>Livres publie apres le {{ selected_date|date('Y/m/d') }}</h2>
+        
+        {% if books|length > 0 %}
+            {% for book in books %}
+                <div>
+                    <h3>{{ book.title }}</h3>
+                    <p>
+                    {# stp toujours en utlisant les attributs comme ils sont declarer dans vos entites si non  erreur  #}
+                        <strong>Auteur :</strong> {{ book.author.username }}<br>
+                        {# n'oubliez pas filtre de date comme nous avons fait c'est tres important  #}
+                        <strong>Date de publication :</strong> {{ book.publicationDate|date('d/m/Y') }}<br>
+                        <strong>Categorie :</strong> {{ book.category }}
+                    </p>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>aucun livre trouve publie apres cette date</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

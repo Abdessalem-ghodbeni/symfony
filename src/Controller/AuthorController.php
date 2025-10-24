@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
+use App\Repository\BookRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +40,14 @@ final class AuthorController extends AbstractController
             'liste_auteurs' => $authors,
         ]);
     }
-
+    #[Route('/liste_author_from_db', name: 'app_liste_author_from_db')]
+    public function RecupererListeAuthorFromDbb(AuthorRepository $author_repository): Response
+    {
+        $authors = $author_repository->findAll();
+        return $this->render('author/Liste_auteurs_db.html.twig', [
+            'liste_auteurs' => $authors,
+        ]);
+    }
 
     #[Route('/author/add-static', name: 'app_author_add_static')]
     public function addStatic(ManagerRegistry $manager_registry): Response
@@ -84,7 +92,7 @@ final class AuthorController extends AbstractController
         // excuter la suppression dans la base de donnees + envoie data et donner l'ordre a doctrine d'executer la requete donc on utilise flush()
         $em->flush();
 
-        // Message de confirmation
+        // Message de confirmation -optionnel - pour cela on utilise la fct addFlash fournie par la classe abstraite AbstractController (dont herite notre controller comme j'ai expliqué en classe)
         $this->addFlash('success', 'Auteur supprimé avec succès');
 
         return $this->redirectToRoute('app_liste_author_from_db');
@@ -162,6 +170,18 @@ final class AuthorController extends AbstractController
         return $this->render('author/edit.html.twig', [
             'form' => $form->createView(),
             'author' => $author,
+        ]);
+    }
+
+
+    // methode query builder
+    #[Route('/authors/by-email', name: 'authors_by_email')]
+    public function authorsByEmail(AuthorRepository $authorRepository): Response
+    {
+        $authors = $authorRepository->listAuthorByEmail();
+
+        return $this->render('author/list_by_email.html.twig', [
+            'authors' => $authors,
         ]);
     }
 }

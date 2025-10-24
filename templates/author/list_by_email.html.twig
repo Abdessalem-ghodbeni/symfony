@@ -1,0 +1,10 @@
+ 
+<h2>Auteurs (tries par email)</h2>
+
+<ul>
+  {% for author in authors %}
+    <li>{{ author.email }} — {{ author.username }}</li>
+  {% else %}
+    <li>Aucun auteur trouve</li>
+  {% endfor %}
+</ul>
